@@ -31,4 +31,4 @@ plt.plot(x) #描画データを追加
 plt.xlabel('Sampling point') # x軸のラベルを設定
 plt.show() #表示
  #画像ファイルに保存
-fig.savefig('plot-waveform.png')
+fig.savefig('short.png')

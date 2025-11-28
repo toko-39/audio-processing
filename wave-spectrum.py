@@ -15,11 +15,12 @@ SR= 16000
  #音声ファイルの読み込み
 x,_ =librosa.load('short.wav',sr=SR)
 
-x_a = x[:int(SR * 1.5)]
-x_i = x[int(SR * 1.5): int(SR * 2.5)]
+
+x_a = x[int(SR * 0.5):int(SR * 1.7)]
+x_i = x[int(SR * 1.7): int(SR * 2.5)]
 x_u = x[int(SR * 2.5): int(SR * 4)]
-x_e = x[int(SR * 4): int(SR * 4.8)]
-x_o = x[int(SR * 4.8): int(SR * 5.6)]
+x_e = x[int(SR * 4): int(SR * 5)]
+x_o = x[int(SR * 5): int(SR * 6)]
 
  #高速フーリエ変換
 # np.fft.rfftを使用するとFFTの前半部分のみが得られる
