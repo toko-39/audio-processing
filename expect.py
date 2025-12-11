@@ -29,34 +29,18 @@ def cepstrum(amplitude_spectrum):
     amplitude_spectrum += 1e-6
     log_spectrum=np.log(amplitude_spectrum)
     cepstrum=np.fft.fft(log_spectrum)
-    # print(cepstrum.shape)
     return cepstrum
 
 def calculate_cepstrum_real(x):
     fft_spec = np.fft.fft(x)
     fft_abs_spec = np.abs(fft_spec)
-    if np.isinf(fft_abs_spec).any():
-        print('fft is inf')
-        exit()   
-    ceps_result = cepstrum(fft_abs_spec)
-    
+    ceps_result = cepstrum(fft_abs_spec) 
     ceps_result_real = np.real(ceps_result)
-    if np.isinf(ceps_result_real).any():
-        print('ceps is inf')
-        exit()    
     return ceps_result_real
 
 def calculate_params(cepstrum_data):
     average = np.mean(cepstrum_data, axis=0)
     variance = np.var(cepstrum_data, axis=0)
-    # print(average.shape)
-    # print(variance.shape)
-    # if np.isinf(average).any():
-    #     print('average is NN')
-    #     exit()
-    if np.isinf(cepstrum_data).any():
-        print('cepstrum is NN')
-        exit()
     return average, variance
 
 all_ceps_a = []
@@ -136,21 +120,6 @@ model_e = calculate_params(np.array(all_ceps_e))
 model_o = calculate_params(np.array(all_ceps_o))
 
 def calculate_log_likelihood(cepstrum_feature, average, variance):
-    if np.isnan(average).any():
-        print('average is NaN')
-        exit()
-    if np.isnan(cepstrum_feature).any():
-        print('cepstrum is NaN')
-        exit()
-    if np.isnan(cepstrum_feature - average).any():
-        print(cepstrum_feature)
-        print(average)
-        print('NaN')
-        exit()
-    # print(average.shape)
-    # print(variance.shape)
-    # print(average)
-    # print(variance)
     D = len(cepstrum_feature)
     variance_safe = variance + 1e-9
     term1 = - (D / 2.0) * np.log(2 * np.pi)
@@ -158,8 +127,6 @@ def calculate_log_likelihood(cepstrum_feature, average, variance):
     diff = cepstrum_feature - average
     term3 = - 0.5 * np.sum((diff ** 2) / variance_safe)
     log_likelihood = term1 + term2 + term3
-    
-
     return log_likelihood
 
 likelihoods = []
@@ -184,7 +151,7 @@ def plot_likelihoods(x_frame, model_a, model_i, model_u, model_e, model_o, likel
     
     likelihoods.append(predict_result)
     
-    return likelihoods, predict_a
+    return likelihoods
     
 for i in np.arange(0, len(x_l)-size_frame,size_shift):
     
@@ -195,7 +162,7 @@ for i in np.arange(0, len(x_l)-size_frame,size_shift):
     fft_log_abs_spec=np.log(np.abs(fft_spec))
     spectrogram.append(fft_log_abs_spec)
     
-    likelihoods, predict_a= plot_likelihoods(x_frame, model_a, model_i, model_u, model_e, model_o, likelihoods)
+    likelihoods = plot_likelihoods(x_frame, model_a, model_i, model_u, model_e, model_o, likelihoods)
     
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 6))
 
@@ -222,6 +189,3 @@ ax2.grid(axis='y', linestyle='--')
 
 plt.tight_layout() 
 plt.show()
-# print(predict_a)
-# print(model_a)
-# print(all_ceps_a)
