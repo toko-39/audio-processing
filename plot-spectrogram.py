@@ -50,13 +50,6 @@ for i in np.arange(0, len(x)-size_frame,size_shift):
  # np.fft.rfftを使用するとFFTの前半部分のみが得られる
     fft_spec=np.fft.rfft(x_frame * hamming_window)
 
- # np.fft.fft / np.fft.fft2を用いた場合
- #複素スペクトログラムの前半だけを取得
- #fft_spec_first = fft_spec[:int(size_frame/2)]
-#【補足】
- #配列（リスト）のデータ参照
- # list[:B] listの先頭からB-1番目までのデータを取得
-
 #複素スペクトログラムを対数振幅スペクトログラムに
     fft_log_abs_spec=np.log(np.abs(fft_spec))
 
