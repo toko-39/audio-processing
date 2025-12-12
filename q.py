@@ -4,8 +4,8 @@ from scipy.io import wavfile
 import os
 
 # --- 設定 ---
-input_wav = "free.wav" 
-output_wav = "free_10sec.wav" 
+input_wav = "koka10.wav" 
+output_wav = "kimi.wav" 
 SR = 16000 # サンプリングレート (librosaのデフォルトは22050だが、ここでは16000を使用)
 start_time_sec = 0  # 開始時刻（秒）最初から
 duration_sec = 10   # 切り出す長さ（秒）
