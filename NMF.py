@@ -33,20 +33,17 @@ for i in range(update_times):
 
 plt.figure(figsize=(12, 10))
 
-# 1. 元のスペクトログラム
 plt.subplot(2, 2, 1)
 librosa.display.specshow(librosa.amplitude_to_db(Y, ref=np.max), 
                          y_axis='hz', x_axis='time', sr=SR)
 plt.title('Y')
 
-# 2. 再構成されたスペクトログラム
 plt.subplot(2, 2, 2)
 Y_hat = np.dot(H, U)
 librosa.display.specshow(librosa.amplitude_to_db(Y_hat, ref=np.max), 
                          y_axis='hz', x_axis='time', sr=SR)
 plt.title('HU')
 
-# 3. 基底行列 H (周波数成分)
 plt.subplot(2, 2, 3)
 # 周波数軸の値を生成
 frequencies = librosa.fft_frequencies(sr=SR)
@@ -58,7 +55,6 @@ plt.ylabel('Amplitude')
 plt.title('H')
 plt.legend()
 
-# 4. アクティベーション行列 U (時間変化)
 plt.subplot(2, 2, 4)
 # 時間軸の値を生成
 times = librosa.frames_to_time(np.arange(U.shape[1]), sr=SR)
