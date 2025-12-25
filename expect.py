@@ -16,7 +16,8 @@ hamming_window =np.hamming(size_frame)
 spectrogram=[]
 
 
-x_l, _ = librosa.load('long.wav', sr=SR)
+# x_l, _ = librosa.load('long.wav', sr=SR)
+x_l, _ = librosa.load('kimi.wav', sr=SR)
 x_s, _ = librosa.load('short.wav', sr=SR)
 
 x_a = x_s[int(SR * 0.5):int(SR * 1.7)]
